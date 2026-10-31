@@ -16,23 +16,16 @@ permissions:
 jobs:
   build:
     name: Build Windows canary
-    if: github.repository == 'block/buzz'
     runs-on: windows-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     permissions:
-      contents: read
+      contents: write
     env:
       TARGET: x86_64-pc-windows-msvc
     steps:
-      - name: Require main
+      - name: Check branch
         shell: bash
-        env:
-          SOURCE_REF: ${{ github.ref }}
-        run: |
-          if [[ "$SOURCE_REF" != "refs/heads/main" ]]; then
-            echo "::error::Canary builds must run from main; got $SOURCE_REF"
-            exit 1
-          fi
+        run: echo "Building canary on ${GITHUB_REF}"
 
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
@@ -170,6 +163,19 @@ jobs:
           path: ${{ steps.artifact.outputs.exe }}
           if-no-files-found: error
           retention-days: 7
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@c95fe1489396fe8a9ec874536570be5bc170c365 # v2.2.1
+        if: success()
+        with:
+          tag_name: "v0.5.28-zh-${{ github.run_number }}"
+          name: "Buzz 蜂巢 桌面端 简体中文版 (v0.5.28-zh)"
+          body: |
+            ### 🐝 Buzz 蜂巢 桌面端 简体中文汉化版
+            - **界面汉化**：全面汉化欢迎引导、侧边栏、频道管理、AI 模型提供商设置、身份与私钥管理等核心界面
+            - **系统支持**：Windows 10 / 11 (64位)
+            - **安装说明**：下载下方 Assets 中的 `.exe` 安装程序直接运行即可
+          files: ${{ steps.artifact.outputs.exe }}
 
       - name: Measure release Cargo cache inputs
         if: always()

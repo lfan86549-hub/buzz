@@ -23,6 +23,7 @@ import { recoverLocalStorageQuotaOnStartup } from "@/shared/lib/localStorageQuot
 import { startLocalStorageSweep } from "@/shared/lib/localStorageSweep";
 import { initializeConversationDensityPreference } from "@/shared/lib/conversationDensityPreference";
 import { initializeFontSizePreference } from "@/shared/lib/fontSizePreference";
+import { initChineseLocalization } from "@/shared/i18n/initChinese";
 
 type E2eWindow = Window & {
   __BUZZ_E2E__?: unknown;
@@ -133,6 +134,7 @@ async function bootstrap() {
   startLocalStorageSweep();
   await installE2eBridgeIfConfigured();
   await migrateLegacyCommunityStorageBeforeRender();
+  initChineseLocalization();
   renderApp();
 }
 
