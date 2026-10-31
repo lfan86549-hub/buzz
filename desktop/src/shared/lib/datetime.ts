@@ -11,40 +11,41 @@
  * deliberate deviation noted on `formatDayGroupLabel`.
  */
 
-const WEEKDAY_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const WEEKDAY_FORMATTER = new Intl.DateTimeFormat("zh-CN", {
   weekday: "long",
 });
 
-const WEEKDAY_MONTH_DAY_FORMATTER = new Intl.DateTimeFormat("en-US", {
-  weekday: "long",
+const WEEKDAY_MONTH_DAY_FORMATTER = new Intl.DateTimeFormat("zh-CN", {
   month: "long",
   day: "numeric",
+  weekday: "long",
 });
 
-const MONTH_DAY_YEAR_FORMATTER = new Intl.DateTimeFormat("en-US", {
-  month: "long",
-  day: "numeric",
+const MONTH_DAY_YEAR_FORMATTER = new Intl.DateTimeFormat("zh-CN", {
   year: "numeric",
+  month: "long",
+  day: "numeric",
 });
 
 const SHORT_WEEKDAY_SHORT_MONTH_DAY_FORMATTER = new Intl.DateTimeFormat(
-  "en-US",
+  "zh-CN",
   {
-    weekday: "short",
-    month: "short",
+    month: "numeric",
     day: "numeric",
+    weekday: "short",
   },
 );
 
-const SHORT_MONTH_DAY_YEAR_FORMATTER = new Intl.DateTimeFormat("en-US", {
-  month: "short",
-  day: "numeric",
+const SHORT_MONTH_DAY_YEAR_FORMATTER = new Intl.DateTimeFormat("zh-CN", {
   year: "numeric",
+  month: "numeric",
+  day: "numeric",
 });
 
-const TIME_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const TIME_FORMATTER = new Intl.DateTimeFormat("zh-CN", {
   hour: "numeric",
   minute: "2-digit",
+  hour12: false,
 });
 
 /** Days in a week, past which the weekday name stops being unambiguous. */
@@ -87,8 +88,8 @@ export function formatDayGroupLabel(
   const now = new Date(nowSeconds * 1_000);
   const dayDiff = calendarDaysBetween(now, date);
 
-  if (dayDiff === 0) return "Today";
-  if (dayDiff === 1) return "Yesterday";
+  if (dayDiff === 0) return "今天";
+  if (dayDiff === 1) return "昨天";
   // Bounded below as well as above: a timestamp in the future (clock skew, or a
   // relay ahead of this machine) must not be labelled with a weekday that reads
   // as the recent past.
@@ -145,7 +146,7 @@ export function formatItemTimestamp(
 
   let dayLabel: string;
   if (dayDiff === 1) {
-    dayLabel = "Yesterday";
+    dayLabel = "昨天";
   } else if (dayDiff > 1 && dayDiff < WEEKDAY_BAND_DAYS) {
     dayLabel = WEEKDAY_FORMATTER.format(date);
   } else {
@@ -155,7 +156,7 @@ export function formatItemTimestamp(
         : SHORT_MONTH_DAY_YEAR_FORMATTER.format(date);
   }
 
-  return withTime ? `${dayLabel} at ${time}` : dayLabel;
+  return withTime ? `${dayLabel} ${time}` : dayLabel;
 }
 
 /** Local midnight of the calendar day containing `date`. */

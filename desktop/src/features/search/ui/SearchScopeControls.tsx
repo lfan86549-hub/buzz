@@ -65,7 +65,7 @@ export function SearchDialogInputRow({
         {query.length === 0 ? (
           <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center text-base leading-none">
             {scopeLabel ? (
-              <span className="text-muted-foreground">Search messages</span>
+              <span className="text-muted-foreground">搜索消息</span>
             ) : (
               <SearchPromptPlaceholder />
             )}
@@ -130,14 +130,15 @@ export function CurrentChannelSearchAction({
             className="min-w-0 truncate text-sm text-muted-foreground"
             data-testid="search-current-scope-label"
           >
-            {isDirectMessage ? "Search conversation with " : "Search in "}
+            {isDirectMessage ? "在与 " : "在 "}
             <span className="font-medium text-foreground">{channelLabel}</span>
+            {isDirectMessage ? " 的对话中搜索" : " 中搜索"}
           </span>
         </span>
         <span className="ml-auto shrink-0 text-xs text-muted-foreground/70">
           {isDirectMessage
-            ? "Search messages in this conversation."
-            : "Search messages in this channel"}
+            ? "搜索此私信对话中的消息"
+            : "搜索此频道中的消息"}
         </span>
       </button>
     </div>

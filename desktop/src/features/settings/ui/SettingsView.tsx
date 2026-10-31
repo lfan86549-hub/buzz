@@ -53,7 +53,7 @@ export const settingsNavGroups: Array<{
   sections: SettingsSection[];
 }> = [
   {
-    label: "Personal",
+    label: "个人偏好",
     sections: [
       "profile",
       "appearance",
@@ -66,11 +66,11 @@ export const settingsNavGroups: Array<{
     ],
   },
   {
-    label: "Communities",
+    label: "社区管理",
     sections: ["hosted-communities", "community-members", "relay-admin"],
   },
   {
-    label: "App",
+    label: "应用设置",
     sections: ["agents", "compute", "experimental", "mobile", "updates"],
   },
 ];

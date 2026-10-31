@@ -71,22 +71,22 @@ type SearchHitContextLabel = {
 function formatRelativeTime(unixSeconds: number) {
   const diff = Math.floor(Date.now() / 1_000) - unixSeconds;
   if (diff < 60) {
-    return "just now";
+    return "刚刚";
   }
 
   if (diff < 60 * 60) {
-    return `${Math.floor(diff / 60)}m ago`;
+    return `${Math.floor(diff / 60)} 分钟前`;
   }
 
   if (diff < 60 * 60 * 24) {
-    return `${Math.floor(diff / (60 * 60))}h ago`;
+    return `${Math.floor(diff / (60 * 60))} 小时前`;
   }
 
   if (diff < 60 * 60 * 24 * 7) {
-    return `${Math.floor(diff / (60 * 60 * 24))}d ago`;
+    return `${Math.floor(diff / (60 * 60 * 24))} 天前`;
   }
 
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat("zh-CN", {
     month: "short",
     day: "numeric",
   }).format(new Date(unixSeconds * 1_000));

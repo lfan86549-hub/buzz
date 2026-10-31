@@ -87,11 +87,11 @@ export function ChannelScreenHeader({
   const terminalButton = activeChannel ? (
     <Button
       aria-label={
-        terminalPanel.mode === "closed" ? "Open Buzz Term" : "Hide Buzz Term"
+        terminalPanel.mode === "closed" ? "打开终端 Buzz Term" : "隐藏终端 Buzz Term"
       }
       onClick={toggleTerminalPanel}
       size="icon"
-      title="Buzz Term (⌘J)"
+      title="终端 Buzz Term (⌘J)"
       type="button"
       variant={terminalPanel.mode === "closed" ? "outline" : "secondary"}
     >
@@ -108,7 +108,7 @@ export function ChannelScreenHeader({
           variant="default"
         >
           <LogIn className="mr-1.5 h-4 w-4" />
-          {isJoining ? "Joining…" : "Join"}
+          {isJoining ? "正在加入…" : "加入频道"}
         </Button>
         {headerEndActions}
       </div>
