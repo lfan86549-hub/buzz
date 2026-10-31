@@ -165,17 +165,15 @@ jobs:
           retention-days: 7
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@c95fe1489396fe8a9ec874536570be5bc170c365 # v2.2.1
         if: success()
-        with:
-          tag_name: "v0.5.28-zh-${{ github.run_number }}"
-          name: "Buzz 蜂巢 桌面端 简体中文版 (v0.5.28-zh)"
-          body: |
-            ### 🐝 Buzz 蜂巢 桌面端 简体中文汉化版
-            - **界面汉化**：全面汉化欢迎引导、侧边栏、频道管理、AI 模型提供商设置、身份与私钥管理等核心界面
-            - **系统支持**：Windows 10 / 11 (64位)
-            - **安装说明**：下载下方 Assets 中的 `.exe` 安装程序直接运行即可
-          files: ${{ steps.artifact.outputs.exe }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          TAG="v0.5.28-zh-${{ github.run_number }}"
+          gh release create "$TAG" "${{ steps.artifact.outputs.exe }}" \
+            --title "Buzz 蜂巢 桌面端 简体中文版 ($TAG)" \
+            --notes "Buzz 桌面端 简体中文汉化版，下载下方的 .exe 文件直接安装即可。"
 
       - name: Measure release Cargo cache inputs
         if: always()
